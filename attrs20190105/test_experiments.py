@@ -45,7 +45,7 @@ class TestExperiments:
 
         with pytest.raises(TypeError):
             # noinspection PyArgumentList
-            o = experiments.NoInitNoDefault(y=1)
+            experiments.NoInitNoDefault(y=1)
 
     def test_noinit(self):
         o = experiments.NoInit()
@@ -53,7 +53,7 @@ class TestExperiments:
 
         with pytest.raises(TypeError):
             # noinspection PyArgumentList
-            o = experiments.NoInitNoDefault(y=1)
+            experiments.NoInitNoDefault(y=1)
 
     def test_factoried(self):
         o = experiments.Factoried()
