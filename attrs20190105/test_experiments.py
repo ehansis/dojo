@@ -1,5 +1,6 @@
 import attr
 import pytest
+import json
 
 from attrs20190105 import experiments
 
@@ -81,3 +82,22 @@ class TestExperiments:
 
         with pytest.raises(AssertionError):
             experiments.TypedValidated(i='foo')
+
+    def test_recursive_dict(self):
+        o = experiments.Simple(
+            value=[experiments.Simple(value=1, label='yay'),
+                   'foo',
+                   experiments.Simple(
+                       value={'a': 'bar',
+                              'b': experiments.Simple(value=17, label='yes')},
+                       label='dict'
+                   )],
+            label='list')
+
+        d = attr.asdict(o)
+        assert d['value'][2]['value']['b']['label'] == 'yes'
+        assert d['value'][0]['value'] == 1
+
+        s = json.dumps(attr.asdict(o))
+        assert 'yes' in s
+        assert json.loads(s) == d
