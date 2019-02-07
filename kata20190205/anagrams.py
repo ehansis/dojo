@@ -3,7 +3,7 @@ from collections import defaultdict
 
 
 def words():
-    file_path = os.path.join(os.path.dirname(__file__), 'wordlist.txt')
+    file_path = os.path.join(os.path.dirname(__file__), '..', 'wordlist.txt')
     with open(file_path, encoding='latin1') as f:
         lines = f.readlines()
 
