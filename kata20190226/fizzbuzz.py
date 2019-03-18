@@ -172,3 +172,36 @@ def f12(n):
             out.append(str(i))
 
     return out
+
+
+def f13(n):
+    out = []
+    for i in range(1, n + 1):
+        if i % 3 == 0:
+            if i % 5 == 0:
+                out.append("fizzbuzz")
+            else:
+                out.append("fizz")
+        elif i % 5 == 0:
+            out.append("buzz")
+        else:
+            out.append(str(i))
+
+    return out
+
+
+def f14(n):
+    out = []
+    for i in range(1, n + 1):
+        if i % 3 == 0:
+            if i % 5 == 0:
+                out.append("fizzbuzz")
+            else:
+                out.append("fizz")
+        elif i % 5 == 0:
+            out.append("buzz")
+        else:
+            out.append(str(i))
+
+    return out
+
