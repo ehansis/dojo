@@ -1,0 +1,23 @@
+Kata10: Hashes vs. Classes
+--------------------------
+
+* Classes
+
++ Inheritance, code re-use for similar tasks
++ Clearly defined interface and data structure
++ Strongly typed, reduces errors
+
+- Harder to extend (logic + data fields)
+- Code Overhead
+- Inheritance can become complicated
+
+
+* Dictionaries
+
++ 'Only the data'
++ Business logic separated from data structures
++ Easily extensible, trivial serialization
+
+- Data structure requires explicit documentation
+- Loosely typed, more error prone
+- More difficult to implement validation, default values etc.
