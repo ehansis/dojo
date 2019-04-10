@@ -1,0 +1,28 @@
+Best Sellers
+------------
+
+Very naive:
+- update from query on all sales records in existing sales DB
+
+Naive:
+- store per product ID and hour (rotating 24-hour buffer) the # of sales
+- traverse whole table at the end of each hour, find top sellers
+- memory: 24 * # product IDs * length product ID, e.g. 24 * 10 Mio * 8 bytes = 1.84 GB, possible in memory
+
+Alternative data structure:
+- store per hour (rotating buffer of 24 elements) the # of sales per product ID
+- requires fewer slots for product IDs, store only those occurring per hour
+- memory: 24 * # product IDs per hour * length product ID, e.g. 24 * 1 Mio * 8 bytes = 184 MB, easily possible in memory
+
+Smarter update:
+- keep count total per product ID in addition to hourly values
+- on update, subtract counts from 24 hours ago, add counts from current hour (no need to traverse all 24 slots)
+- requires an additional record per occurring product ID, e.g. 10 Mio * 8 bytes = 80 MB
+
+Easier problem:
+- top sellers for the current day
+- requires storing one set of counts only
+
+Real time update:
+- requires full timeline of all sales
+
