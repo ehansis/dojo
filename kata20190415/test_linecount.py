@@ -1,7 +1,6 @@
 from . import linecount
 
-
-test_1 = """// This file contains 3 lines of code
+test_1 = r"""// This file contains 3 lines of code
 public interface Dave {
   /**
    * count the number of lines in a file
@@ -10,7 +9,7 @@ public interface Dave {
 }
 """
 
-test_2 = """/*****
+test_2 = r"""/*****
 * This is a test program with 5 lines of code
 *  \/* no nesting allowed!
 //*****//***/// Slightly pathological comment ending...
