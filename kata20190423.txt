@@ -1,0 +1,26 @@
+Business Rules kata
+-------------------
+
+* Define a set of queries for 'triggers':
+  - Query payment type (purchase, membership, upgrade to membership, ...)
+  - Query product category
+  - Query product name
+  - ...
+
+* Extract transaction data from the associated business objects, for use in
+  actions and templates:
+  - Customer number, name, address, ...
+  - Product info
+  - ...
+
+* Code a set of 'actions':
+  - Activate membership
+  - Email customer (with a variable email template)
+  - Generate various packing slips (with variable recipient)
+  - ...
+
+* Encode business rules in human-readable statements, e.g. Excel tables
+  or using a rules editing interface, such that non-technical experts can
+  add or modify rules.
+
+* Run all rules applicable to a payment upon receipt
