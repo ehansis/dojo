@@ -7,16 +7,6 @@ def test_wordlist():
     assert all(len(ww) > 0 for ww in w)
 
 
-def test_cache_dict():
-    d = wordchain.CacheDict(lambda k: k * 10)
-    assert d[0] == 0
-    assert d[10] == 100
-    assert d[7] == 70
-
-    d.d[7] = 42
-    assert d[7] == 42
-
-
 def test_candidates():
     w = wordchain.WordChain(4)
     n = w.next_words('pool')
@@ -37,6 +27,6 @@ def test_wordchain():
     c = w.chain('lead', 'gold')
     print(c)
 
-    w = wordchain.WordChain(6)
-    c = w.chain('apple', 'grape')
-    print(c)
+    # w = wordchain.WordChain(6)
+    # c = w.chain('apple', 'grape')
+    # print(c)
