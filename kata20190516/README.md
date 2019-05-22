@@ -11,7 +11,7 @@ Various other `attrs` classes may exist to represent other parts of the game, li
 
 *Dealer*: Initializes a game state to a new, random game (with optional fixed random seed).
 
-*Inspector*: Finds possible valid moves, checks if the game is one (or lost).
+*Inspector*: Finds possible valid moves, checks if the game is won (or lost).
 Subroutines to check validity of different moves for specific cards and game states.
     - If stock pile is empty, return turning it over to make it the new stock as only move
 
@@ -54,8 +54,6 @@ State/data classes
 - N: Number of cards moved
 - New: True if the move leaves a new card exposed to be turned over, false otherwise
 - Empty: True if the move leaves the from-pile empty
-
-Move attributes may be None if they have no meaning for the respective move.
 
 
 
