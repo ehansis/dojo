@@ -128,3 +128,44 @@ def test_check_tableau_to_foundation():
         leaves_from_empty=False)
 
 
+def test_check_discard_to_foundation():
+    g = klondike.deal()
+    g.discard.append(klondike.Card(suite=klondike.Suite.HEARTS, value=2))
+    assert len(klondike.check_discard_to_foundation(g)) == 0
+
+    g = klondike.deal()
+    g.discard.append(klondike.Card(suite=klondike.Suite.HEARTS, value=1))
+    g.discard.append(klondike.Card(suite=klondike.Suite.HEARTS, value=2))
+    moves = klondike.check_discard_to_foundation(g)
+    assert len(moves) == 4
+    assert moves[0] == klondike.Move(
+        move_type=klondike.MoveType.TABLEAU_TO_FOUNDATION,
+        from_pile=g.discard,
+        to_pile=g.foundations[0],
+        n=1,
+        new_exposed_card=True,
+        leaves_from_empty=False)
+    assert moves[-1] == klondike.Move(
+        move_type=klondike.MoveType.TABLEAU_TO_FOUNDATION,
+        from_pile=g.discard,
+        to_pile=g.foundations[3],
+        n=1,
+        new_exposed_card=True,
+        leaves_from_empty=False)
+
+    g = klondike.deal()
+    g.discard.append(klondike.Card(suite=klondike.Suite.DIAMONDS, value=3))
+    for i, f in enumerate(g.foundations[:-1]):
+        f.append(klondike.Card(suite=klondike.Suite.DIAMONDS, value=i + 1))
+    g.foundations[-1].append(klondike.Card(suite=klondike.Suite.HEARTS, value=2))
+    moves = klondike.check_discard_to_foundation(g)
+    assert len(moves) == 1
+    assert moves[0] == klondike.Move(
+        move_type=klondike.MoveType.TABLEAU_TO_FOUNDATION,
+        from_pile=g.discard,
+        to_pile=g.foundations[1],
+        n=1,
+        new_exposed_card=False,
+        leaves_from_empty=True)
+
+
