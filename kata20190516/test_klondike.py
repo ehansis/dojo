@@ -139,14 +139,14 @@ def test_check_discard_to_foundation():
     moves = klondike.check_discard_to_foundation(g)
     assert len(moves) == 4
     assert moves[0] == klondike.Move(
-        move_type=klondike.MoveType.TABLEAU_TO_FOUNDATION,
+        move_type=klondike.MoveType.DISCARD_TO_FOUNDATION,
         from_pile=g.discard,
         to_pile=g.foundations[0],
         n=1,
         new_exposed_card=True,
         leaves_from_empty=False)
     assert moves[-1] == klondike.Move(
-        move_type=klondike.MoveType.TABLEAU_TO_FOUNDATION,
+        move_type=klondike.MoveType.DISCARD_TO_FOUNDATION,
         from_pile=g.discard,
         to_pile=g.foundations[3],
         n=1,
@@ -161,7 +161,7 @@ def test_check_discard_to_foundation():
     moves = klondike.check_discard_to_foundation(g)
     assert len(moves) == 1
     assert moves[0] == klondike.Move(
-        move_type=klondike.MoveType.TABLEAU_TO_FOUNDATION,
+        move_type=klondike.MoveType.DISCARD_TO_FOUNDATION,
         from_pile=g.discard,
         to_pile=g.foundations[1],
         n=1,

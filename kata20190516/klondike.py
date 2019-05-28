@@ -158,8 +158,8 @@ def _check_fits_foundation(card: Card, foundation: Pile) -> bool:
         return False
 
 
-def _moves_to_foundation(from_pile: Pile, game: Game) -> List[Move]:
-    """Check for moves onto a given foundation"""
+def _moves_to_foundation(from_pile: Pile, game: Game, move_type: MoveType) -> List[Move]:
+    """Check for moves onto any foundation"""
 
     if len(from_pile) == 0:
         return []
@@ -168,7 +168,7 @@ def _moves_to_foundation(from_pile: Pile, game: Game) -> List[Move]:
     for foundation in game.foundations:
         if _check_fits_foundation(from_pile[0], foundation):
             moves.append(Move(
-                move_type=MoveType.TABLEAU_TO_FOUNDATION,
+                move_type=move_type,
                 from_pile=from_pile,
                 to_pile=foundation,
                 n=1,
@@ -190,13 +190,13 @@ def check_tableau_to_foundation(game: Game) -> List[Move]:
     """
     moves = []
     for tableau in game.tableaus:
-        moves += _moves_to_foundation(tableau, game)
+        moves += _moves_to_foundation(tableau, game, MoveType.TABLEAU_TO_FOUNDATION)
 
     return moves
 
 
 def check_discard_to_foundation(game: Game) -> List[Move]:
-    """Check for moves that move a card from a discard pile to a foundation pile
+    """Check for moves that move a card from the discard pile to a foundation pile
 
     Args:
         game: the game
@@ -204,5 +204,78 @@ def check_discard_to_foundation(game: Game) -> List[Move]:
     Returns:
         list of possible moves
     """
-    return _moves_to_foundation(game.discard, game)
+    return _moves_to_foundation(game.discard, game, MoveType.DISCARD_TO_FOUNDATION)
 
+
+def _check_fits_tableau(card: Card, tableau: Pile) -> bool:
+    """Check if a given card fits onto a given tableau"""
+    if len(tableau) == 0 and card.value == 13:
+        return True
+    elif len(tableau) > 0 and card.value == tableau[0].value - 1 and card.color != tableau[0].color:
+        return True
+    else:
+        return False
+
+
+def _moves_to_tableau(from_pile: Pile, i: int, game: Game, move_type: MoveType) -> List[Move]:
+    """Check for moves onto any tableau"""
+
+    if len(from_pile) < i + 1:
+        return []
+
+    moves = []
+    for tableau in game.tableaus:
+        if _check_fits_foundation(from_pile[i], tableau):
+            moves.append(Move(
+                move_type=move_type,
+                from_pile=from_pile,
+                to_pile=tableau,
+                n=i + 1,
+                new_exposed_card=len(from_pile) > i + 1,
+                leaves_from_empty=len(from_pile) == i + 1
+            ))
+
+    return moves
+
+
+def check_discard_to_tableau(game: Game) -> List[Move]:
+    """Check for moves that move a card from the discard pile to a tableau pile
+
+    Args:
+        game: the game
+
+    Returns:
+        list of possible moves
+    """
+    return _moves_to_tableau(game.discard, 0, game, MoveType.DISCARD_TO_TABLEAU)
+
+
+def check_tableau_to_tableau(game: Game) -> List[Move]:
+    """Check for moves that move a card from the discard pile to a tableau pile
+
+    Args:
+        game: the game
+
+    Returns:
+        list of possible moves
+    """
+    moves = []
+    for tableau in game.tableaus:
+        for i in range(len(tableau)):
+            moves += _moves_to_tableau(tableau, i, game, MoveType.TABLEAU_TO_TABLEAU)
+
+    return moves
+
+
+def check_all_moves(game: Game) -> List[Move]:
+    """Get a list of all possible moves"""
+    moves = []
+
+    moves += check_discard_to_stock(game)
+    moves += check_discard_to_foundation(game)
+    moves += check_discard_to_tableau(game)
+    moves += check_stock_to_discard(game)
+    moves += check_tableau_to_foundation(game)
+    moves += check_tableau_to_tableau(game)
+
+    return moves
