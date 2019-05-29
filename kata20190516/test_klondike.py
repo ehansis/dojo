@@ -169,3 +169,99 @@ def test_check_discard_to_foundation():
         leaves_from_empty=True)
 
 
+def test_check_discard_to_tableau():
+    g = klondike.deal()
+    g.discard.append(klondike.Card(suite=klondike.Suite.HEARTS, value=2))
+    for t in g.tableaus:
+        t[0].color = klondike.Color.RED
+    assert len(klondike.check_discard_to_tableau(g)) == 0
+
+    g = klondike.deal()
+    g.discard.append(klondike.Card(suite=klondike.Suite.HEARTS, value=5))
+    g.discard.append(klondike.Card(suite=klondike.Suite.HEARTS, value=2))
+    for t in g.tableaus:
+        t[0].value = 13
+    g.tableaus[0][0] = klondike.Card(suite=klondike.Suite.SPADES, value=4)
+    g.tableaus[1][0] = klondike.Card(suite=klondike.Suite.SPADES, value=6)
+    g.tableaus[2][0] = klondike.Card(suite=klondike.Suite.DIAMONDS, value=6)
+    g.tableaus[3][0] = klondike.Card(suite=klondike.Suite.CLUBS, value=6)
+    moves = klondike.check_discard_to_tableau(g)
+    assert len(moves) == 2
+    assert moves[0] == klondike.Move(
+        move_type=klondike.MoveType.DISCARD_TO_TABLEAU,
+        from_pile=g.discard,
+        to_pile=g.tableaus[1],
+        n=1,
+        new_exposed_card=True,
+        leaves_from_empty=False)
+    assert moves[1] == klondike.Move(
+        move_type=klondike.MoveType.DISCARD_TO_TABLEAU,
+        from_pile=g.discard,
+        to_pile=g.tableaus[3],
+        n=1,
+        new_exposed_card=True,
+        leaves_from_empty=False)
+
+
+def test_check_tableau_to_tableau():
+    g = klondike.deal()
+    for t in g.tableaus:
+        for c in t:
+            c.color = klondike.Color.RED
+    assert len(klondike.check_tableau_to_tableau(g)) == 0
+
+    g = klondike.deal()
+    for t in g.tableaus:
+        for c in t:
+            c.value = 13
+    g.tableaus[0][0] = klondike.Card(suite=klondike.Suite.SPADES, value=4)
+    g.tableaus[1][0] = klondike.Card(suite=klondike.Suite.SPADES, value=6)
+    g.tableaus[2][0] = klondike.Card(suite=klondike.Suite.DIAMONDS, value=5)
+    g.tableaus[3][0] = klondike.Card(suite=klondike.Suite.CLUBS, value=6)
+    g.tableaus[4][0] = klondike.Card(suite=klondike.Suite.HEARTS, value=6)
+    moves = klondike.check_tableau_to_tableau(g)
+    assert len(moves) == 3
+    assert moves[0] == klondike.Move(
+        move_type=klondike.MoveType.TABLEAU_TO_TABLEAU,
+        from_pile=g.tableaus[0],
+        to_pile=g.tableaus[2],
+        n=1,
+        new_exposed_card=False,
+        leaves_from_empty=True)
+    assert moves[1] == klondike.Move(
+        move_type=klondike.MoveType.TABLEAU_TO_TABLEAU,
+        from_pile=g.tableaus[2],
+        to_pile=g.tableaus[1],
+        n=1,
+        new_exposed_card=True,
+        leaves_from_empty=False)
+    assert moves[2] == klondike.Move(
+        move_type=klondike.MoveType.TABLEAU_TO_TABLEAU,
+        from_pile=g.tableaus[2],
+        to_pile=g.tableaus[3],
+        n=1,
+        new_exposed_card=True,
+        leaves_from_empty=False)
+
+    g = klondike.deal()
+    for t in g.tableaus:
+        for c in t:
+            c.value = 13
+    g.tableaus[0][0] = klondike.Card(suite=klondike.Suite.SPADES, value=4)
+    g.tableaus[1][0] = klondike.Card(suite=klondike.Suite.SPADES, value=8)
+    g.tableaus[2][0] = klondike.Card(suite=klondike.Suite.DIAMONDS, value=6)
+    g.tableaus[3][0] = klondike.Card(suite=klondike.Suite.HEARTS, value=13)
+    g.tableaus[3][1] = klondike.Card(suite=klondike.Suite.HEARTS, value=13)
+    g.tableaus[3][2] = klondike.Card(suite=klondike.Suite.HEARTS, value=13)
+    g.tableaus[3][3] = klondike.Card(suite=klondike.Suite.HEARTS, value=5)
+    g.tableaus[4][0] = klondike.Card(suite=klondike.Suite.CLUBS, value=6)
+    moves = klondike.check_tableau_to_tableau(g)
+    assert len(moves) == 1
+    assert moves[0] == klondike.Move(
+        move_type=klondike.MoveType.TABLEAU_TO_TABLEAU,
+        from_pile=g.tableaus[3],
+        to_pile=g.tableaus[4],
+        n=4,
+        new_exposed_card=False,
+        leaves_from_empty=True)
+

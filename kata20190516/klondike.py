@@ -225,7 +225,7 @@ def _moves_to_tableau(from_pile: Pile, i: int, game: Game, move_type: MoveType) 
 
     moves = []
     for tableau in game.tableaus:
-        if _check_fits_foundation(from_pile[i], tableau):
+        if _check_fits_tableau(from_pile[i], tableau):
             moves.append(Move(
                 move_type=move_type,
                 from_pile=from_pile,
