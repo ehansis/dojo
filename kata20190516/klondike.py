@@ -279,3 +279,20 @@ def check_all_moves(game: Game) -> List[Move]:
     moves += check_tableau_to_tableau(game)
 
     return moves
+
+
+def execute_move(game: Game, move: Move) -> None:
+    """Execute a move on a game (in-place)"""
+
+    if move.move_type == MoveType.DISCARD_TO_STOCK:
+        game.stock = game.discard[::-1]
+        game.discard = []
+    else:
+        # stack of moved cards, prior top card is first (index 0)
+        moved_stack: Pile = []
+        for _ in range(move.n):
+            moved_stack.append(move.from_pile.pop(0))
+
+        # move stack to new position, prior top card becomes first again
+        for card in moved_stack[::-1]:
+            move.to_pile.insert(0, card)
