@@ -318,6 +318,38 @@ def f21(n):
     return out
 
 
+def f22(n):
+    out = []
+    for i in range(1, n + 1):
+        if i % 3 == 0:
+            if i % 5 == 0:
+                out.append('fizzbuzz')
+            else:
+                out.append('fizz')
+        elif i % 5 == 0:
+            out.append('buzz')
+        else:
+            out.append(str(i))
+
+    return out
+
+
+def f23(n):
+    out = []
+    for i in range(1, n + 1):
+        if i % 3 == 0:
+            if i % 5 == 0:
+                out.append('fizzbuzz')
+            else:
+                out.append('fizz')
+        elif i % 5 == 0:
+            out.append('buzz')
+        else:
+            out.append(str(i))
+
+    return out
+
+
 somestring = r"\'\'\\''\\'';'\''\';::'::'\\'\\'::'::'\\'\\'''\''\';"
 otherstring = \
     'this' \
@@ -331,3 +363,17 @@ otherstring = \
     ':has ' \
     'so:me' \
     'colons!'
+
+morestring = \
+    'this' \
+    'is' \
+    'split' \
+    'across:some:more' \
+    'lines' \
+    'as a: typing' \
+    'excercise' \
+    'the first quotation' \
+    'mark is: still' \
+    'hard to: get' \
+    'right\\:without:' \
+    'thinking.'
