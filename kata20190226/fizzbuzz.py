@@ -350,6 +350,46 @@ def f23(n):
     return out
 
 
+def f24(n):
+    out = []
+    for i in range(1, n + 1):
+        if i % 3 == 0:
+            if i % 5 == 0:
+                out.append('fizzbuzz')
+            else:
+                out.append('fizz')
+        elif i % 5 == 0:
+            out.append('buzz')
+        else:
+            out.append(str(i))
+
+    return out
+
+
+def f25(n):
+    out = []
+    for i in range(1, n + 1):
+        if i % 3 == 0:
+            if i % 5 == 0:
+                out.append('fizzbuzz')
+            else:
+                out.append('fizz')
+        elif i % 5 == 0:
+            out.append('buzz')
+        else:
+            out.append(str(i))
+
+    return out
+
+
+# 3.141 592 6535 897 932 3846 264 338 3279 502 884 1971 693 993 751
+
+pis = [
+    3.1415926535897932384626433832795028841971693993751,
+    3.1415926535897932384626433832795028841971693993751,
+    3.1415936535897932384626433832795028841971693993751,
+]
+
 somestring = r"\'\'\\''\\'';'\''\';::'::'\\'\\'::'::'\\'\\'''\''\';"
 otherstring = \
     'this' \
